@@ -1,0 +1,22 @@
+{
+  "name": "socket-starter",
+  "version": "0.1.0",
+  "description": "Starter kit for Socket.io with mysql and redis",
+  "main": "index.js",
+  "repository": "https://github.com/cfrancescop/socket-starter.git",
+  "author": "Francesco Pirrone",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.3",
+    "mysql": "^2.13.0",
+    "redis": "^2.7.1",
+    "semaphore": "^1.0.5",
+    "socket.io": "^2.0.3",
+    "socket.io-redis": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^7.0.31",
+    "ts-node": "^3.0.6",
+    "typescript": "^2.3.4"
+  }
+}
