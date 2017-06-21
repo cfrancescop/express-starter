@@ -1,5 +1,8 @@
 {
     "port":3000,
+    "buyan" : {
+        "name":"socket-starter"
+    },
     "redis":{
         "host":"localhost",
         "port":6379
@@ -10,5 +13,8 @@
         "password" : "password",
         "database" : "app",
         "connectionLimit": 10
+    },
+    "authentication":{
+        "query":"SELECT username,password from users where username=?"
     }
 }
