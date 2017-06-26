@@ -4,22 +4,19 @@ const app = express();
 import {Server,createServer} from 'http';
 const http = createServer(app);
 import {config} from './config';
-import {createPool} from 'mysql';
-const pool = createPool(config.mysql);
+import {pool} from './datasource';
 //const authentication = require('./lib/authentication');
 import {AuthenticationManager,NoEncode} from './authentication';
 import {SocketServer} from './socket';
-let authenticate = new AuthenticationManager(pool,new NoEncode());
+let authenticate = new AuthenticationManager();
 let server = new SocketServer(authenticate);
 app.get('/', (req, res) => {
-  pool.query("select 1",(err,result,fields) => {
+  pool.query("select 1",[]).then( result => {
     //RETURN HEALTCHECK
-    if(err){
-      res.send({socket:true,api:true,database:false});
-    } else {
-      res.send({socket:true,api:true,database:true});
-    }
-  });
+      res.send({socket:true,api:true,database:true});})
+    .catch(err => {
+        res.send({socket:true,api:true,database:false});
+    });
 });
 let io = server.init(http, (io) => {
   //TODO set adapter
@@ -31,10 +28,11 @@ io.subscribe(socket => {
   log.info({id:socket.id},"CLIENT CONNECTED");
   //START TIMEOUT FOR AUTHENTICATE
   let timeout = setTimeout(()=> {
-    log.warn("TIMEOUT FOR AUTHENTICATION");
+    log.warn({id:socket.id},"TIMEOUT FOR AUTHENTICATION");
     socket.disconnect();
-  },5000);
+  },60000);
   server.loginPhase(socket).then(username => {
+    //socket.username = username;
     //LOGIN SUCCESS
     //CLEAR AUTHENTICATION TIMEOUT
     clearTimeout(timeout);
@@ -50,7 +48,6 @@ io.subscribe(socket => {
     } ).catch(err => log.info(err));
   }).catch(err => {
     //CATCH FAILED LOGIN
-    
     log.info({id:socket.id},"Login failed");
     socket.disconnect();
   });
