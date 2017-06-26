@@ -3,18 +3,17 @@
     "buyan" : {
         "name":"socket-starter"
     },
-    "redis":{
-        "host":"localhost",
-        "port":6379
-    },
-    "mysql":{
+
+    "postgres":{
         "host"     : "localhost",
-        "user"     : "root",
-        "password" : "password",
-        "database" : "app",
-        "connectionLimit": 10
+        "user"     : "postgres",
+        "port"     : 5432,
+        "password" : "example",
+        "database" : "test",
+        "max": 10
     },
+ 
     "authentication":{
-        "query":"SELECT username,password from users where username=?"
+        "query":"SELECT username,password from users where username=$1"
     }
 }
