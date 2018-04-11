@@ -1,24 +1,11 @@
-export const config:any =require('../config.json');
 
-export declare class Config{
+const yaml = require('js-yaml');
+const fs = require('fs');
+export  type Config = {
     port: number;
     buyan : {
         name:string;
     }
-    mysql:any;
-    redis:any;
-    /*
-    redis : {
-        host:string;
-        port:number;
-    }
-    mysql:{
-        host:string;
-        user:string;
-        password:string;
-        database:string;
-        connectionLimit:number;
-    }*/
     postgres:{
         host:string;
         port:number;
@@ -27,8 +14,6 @@ export declare class Config{
         database:string;
         max:number;
     }
-    authentication:{
-        query:string;
-        encoder:string;
-    }
 }
+export const config: Config =Object.assign({}, yaml.safeLoad(fs.readFileSync('./config.yml', 'utf8')))
+export default config;
