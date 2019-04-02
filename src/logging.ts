@@ -1,3 +1,10 @@
-export const bunyan = require('bunyan');
-import {config} from './config';
-export const log = bunyan.createLogger(config.buyan);
+import winston from "winston";
+
+export default winston.createLogger({
+    level: "info",
+    transports: [
+        new winston
+            .transports
+            .Console()
+    ]
+});

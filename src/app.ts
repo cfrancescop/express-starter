@@ -1,11 +1,19 @@
-const express =require('express')
-import {log} from './logging';
-import {Server,createServer} from 'http';
-import {config} from './config';
-import {pool} from './datasource';
+import express from "express";
 
+import bodyParser from "body-parser";
+import morgan from "morgan";
 const app = express();
-const http = createServer(app);
-http.listen(config.port,() =>{
-  log.info('listening on *:'+config.port);
+
+const jsonParser = bodyParser.json();
+
+app.use(morgan("tiny"));
+app.get("/", (request, response) => {
+  response.json({message: "Hello World"});
 });
+
+app.post("/echo", jsonParser, (request, response) => {
+  const body = request.body;
+  response.json({message: `ECHO: ${body.message}`});
+});
+
+export = app;

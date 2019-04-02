@@ -5,10 +5,11 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Install app dependencies
-COPY package.json /usr/src/app/
-COPY index.js /usr/src/app/
-COPY config.json /usr/src/app/
-COPY lib/ /usr/src/app/lib
+COPY package*.json ./
+
+RUN npm install
+
+COPY dist/ /usr/src/app/dist
 
 RUN npm install
 EXPOSE 3000

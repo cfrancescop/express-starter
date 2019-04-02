@@ -1,34 +1,35 @@
 {
-  "name": "socket-starter",
+  "name": "express-ts-starter",
   "version": "0.1.0",
-  "description": "Starter kit for Socket.io with mysql and redis",
+  "description": "Starter kit for Expressjs with typescript",
   "main": "index.js",
-  "repository": "https://github.com/cfrancescop/socket-starter.git",
+  "repository": "https://github.com/cfrancescop/express-starter",
   "author": "Francesco Pirrone",
   "license": "MIT",
   "dependencies": {
-    "bunyan": "^1.8.10",
-    "express": "^4.15.3",
-    "js-yaml": "^3.11.0",
-    "pg": "^7.0.0"
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
-    "@types/express": "^4.0.36",
+    "@types/express": "^4.16.1",
+    "@types/morgan": "^1.7.35",
     "@types/node": "^7.0.31",
-    "@types/pg": "^6.1.41",
-    "ts-node": "^3.0.6",
-    "typescript": "^2.3.4"
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.10",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.15.0",
+    "typescript": "^3.4.1"
   },
   "scripts": {
     "start": "npm run serve",
     "build": "npm run build-ts && npm run tslint",
-    "serve": "node index.js",
-    "watch-node": "nodemon index.js",
-    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\"  \"npm run watch-ts\" \"npm run watch-node\"",
-    "test": "jest --forceExit --coverage --verbose",
+    "serve": "node dist/server.js",
+    "watch-node": "nodemon dist/server.js",
+    "watch": "npm run watch-ts",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
-
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "debug": "npm run build && npm run watch-debug",
     "serve-debug": "nodemon --inspect dist/server.js",
